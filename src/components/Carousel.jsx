@@ -6,10 +6,21 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const Carousel = () => {
   const [people, setPeople] = useState(list);
+  const [currentPerson, setCurrentPerson] = useState(0);
 
-  const prevSlide = () => {};
+  const prevSlide = () => {
+    setCurrentPerson((oldPerson) => {
+      const result = (oldPerson - 1 + people.length) % people.length;
+      return result;
+    });
+  };
 
-  const nextSlide = () => {};
+  const nextSlide = () => {
+    setCurrentPerson((oldPerson) => {
+      const result = (oldPerson + 1) % people.length;
+      return result;
+    });
+  };
 
   return (
     <section className="slider-container">
@@ -18,7 +29,11 @@ const Carousel = () => {
         return (
           <article
             className="slide"
-            style={{ transform: `translateX(${100 * personIdx}%)` }}
+            style={{
+              transform: `translateX(${100 * (personIdx - currentPerson)}%)`,
+              opacity: personIdx === currentPerson ? 1 : 0,
+              visibility: personIdx === currentPerson ? 'visible' : 'hidden',
+            }}
             key={id}
           >
             <img src={image} alt={name} className="person-img" />
