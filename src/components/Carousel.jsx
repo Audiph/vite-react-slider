@@ -1,11 +1,11 @@
 import React from 'react';
-import { shortList } from '../data';
+import { list, shortList } from '../data';
 import { useState } from 'react';
 import { FaQuoteRight } from 'react-icons/fa';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 const Carousel = () => {
-  const [people, setPeople] = useState(shortList);
+  const [people, setPeople] = useState(list);
 
   const prevSlide = () => {};
 
@@ -13,10 +13,14 @@ const Carousel = () => {
 
   return (
     <section className="slider-container">
-      {people.map((person) => {
+      {people.map((person, personIdx) => {
         const { id, image, name, title, quote } = person;
         return (
-          <article className="slide" key={id}>
+          <article
+            className="slide"
+            style={{ transform: `translateX(${100 * personIdx}%)` }}
+            key={id}
+          >
             <img src={image} alt={name} className="person-img" />
             <h5 className="name">{name}</h5>
             <p className="title">{title}</p>
